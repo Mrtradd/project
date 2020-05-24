@@ -1,0 +1,243 @@
+ScreenManager:
+    id: screen_manager
+    Menu:
+        name: 'Menu'
+        manager: 'screen_manager'
+    Reg:
+        name: 'Reg'
+        manager: 'screen_manager'
+    Login: 
+        name: 'Login'
+        manager: 'screen_manager'
+    Users: 
+        name: 'Users'
+        manager: 'screen_manager'
+    DelUser:
+        name: 'DelUser'
+        manager: 'screen_manager'
+
+<Menu>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [10,50,10,50]
+        spacing: 10
+        Label:
+            text: 'workDB'
+            font_size: 50
+        Button:
+            text: 'Логин'
+            font_size: 30
+            on_release: app.root.current = 'Login'
+        Button:
+            text: 'Регистрация'
+            font_size: 30
+            on_release: app.root.current = 'Reg'
+        Button:
+            text: 'Пользователи'
+            font_size: 30
+            on_release: app.root.current = 'Users'
+<Reg>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [10,50,10,50]
+        spacing: 10
+        Button:
+            text: "Назад"
+            font_size: 15
+            on_release: app.root.current = 'Menu'
+            size_hint: .2, .8
+        Label:
+            text: 'Регистрация'
+            font_size: 32
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Логин'
+                font_size: 18
+                halign: 'left'
+                text_size: root.width-20, 20
+            TextInput:
+                id: login
+                multiline:False
+                font_size: 14
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Пароль'
+                halign: 'left'
+                font_size: 18
+                text_size: root.width-20, 20
+            TextInput:
+                id: passw
+                multiline:False
+                password:True
+                font_size: 14
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Имя'
+                halign: 'left'
+                font_size: 18
+                text_size: root.width-20, 20
+            TextInput:
+                id: name
+                multiline:False
+                font_size: 14
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Фамилия'
+                font_size: 18
+                halign: 'left'
+                text_size: root.width-20, 20
+            TextInput:
+                id: furname
+                multiline:False
+                font_size: 14
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Почта'
+                halign: 'left'
+                font_size: 18
+                text_size: root.width-20, 20
+            TextInput:
+                id: email
+                multiline:False
+                font_size: 14
+        Button:
+            text: 'Регистрация'
+            font_size: 24
+            on_press: root.do_reg(login.text, passw.text, name.text, furname.text, email.text)
+        
+<Login>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [10,50,10,50]
+        spacing: 50
+        Button:
+            text: "Назад"
+            font_size: 15
+            on_release: app.root.current = 'Menu'
+            size_hint: .2, .8
+        Label:
+            text: 'Вход'
+            font_size: 32
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Логин'
+                font_size: 18
+                halign: 'left'
+                text_size: root.width-20, 20
+            TextInput:
+                id: login
+                multiline:False
+                font_size: 14
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Пароль'
+                halign: 'left'
+                font_size: 18
+                text_size: root.width-20, 20
+            TextInput:
+                id: passw
+                multiline:False
+                password:True
+                font_size: 14
+        Button:
+            text: 'Войти'
+            font_size: 24
+            on_press: root.do_login(login.text, passw.text)
+
+<Users>:
+    BoxLayout:
+        orientation: 'horizontal'
+        Button:
+            text: "Назад"
+            font_size: 15
+            on_release: app.root.current = 'Menu'
+            size_hint: .2, .1
+        Button:
+            text: "Удалить пользователя"
+            font_size: 15
+            on_release: app.root.current = 'DelUser'
+            size_hint: .2, .1
+        Button:
+            text: "Удалить базу данных"
+            font_size: 15
+            on_press: root.del_db()
+            size_hint: .2, .1    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [10,50,10,50]
+        spacing: 10
+        GridLayout:
+            size_hint: 1, None
+            size_hint_y: None
+            height: 25
+            cols: 5
+            Label:
+                text: "Логин"
+            Label:
+                text: "Имя"
+            Label:
+                text: "Фамилия"
+            Label:
+                text: "Почта"
+            Label:
+                text: "Монеты"
+        BoxLayout:
+            RecycleView:
+                viewclass: 'SelectableButton'
+                data: [{'text': str(x)} for x in root.data_items]
+                SelectableRecycleGridLayout:
+                    cols: 5
+                    default_size: None, dp(26)
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+
+<DelUser>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [10,50,10,50]
+        spacing: 50
+        Button:
+            text: "Назад"
+            font_size: 15
+            on_release: app.root.current = 'Menu'
+            size_hint: .2, .8
+        Label:
+            text: 'Удалить пользователя'
+            font_size: 32
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Логин'
+                font_size: 18
+                halign: 'left'
+                text_size: root.width-20, 20
+            TextInput:
+                id: login
+                multiline:False
+                font_size: 14
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Пароль'
+                halign: 'left'
+                font_size: 18
+                text_size: root.width-20, 20
+            TextInput:
+                id: passw
+                multiline:False
+                password:True
+                font_size: 14
+        Button:
+            text: 'Удалить'
+            font_size: 24
+            on_press: root.del_user(login.text, passw.text)
+        
